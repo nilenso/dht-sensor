@@ -1,7 +1,7 @@
 use embedded_hal::blocking::delay::{DelayMs, DelayUs};
 use embedded_hal::digital::v2::{InputPin, OutputPin};
 
-const TIMEOUT_US: u8 = 100;
+const TIMEOUT_US: u8 = 255;
 
 #[derive(Debug)]
 pub enum DhtError<E> {
@@ -71,7 +71,7 @@ fn wait_until_timeout<E, F>(delay: &mut impl Delay, func: F) -> Result<(), DhtEr
 where
     F: Fn() -> Result<bool, E>,
 {
-    for _ in 0..TIMEOUT_US {
+    for _ in 0..1000000 {
         if func()? {
             return Ok(());
         }
